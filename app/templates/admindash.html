@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% load static %} 
+{% block title %}index.html{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Admin Menu
+                    </div>
+                    <ul class="list-group list-group-flush">
+                            <a href="">Add User</a>
+                    </ul>
+
+                     <ul class="list-group list-group-flush">
+                            <a href="">Add Subscription</a>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

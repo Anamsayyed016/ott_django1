@@ -1,0 +1,71 @@
+/* General Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Logo Styling */
+.log-logo-img img {
+    height: 60px;
+    width: auto;
+}
+
+/* Navbar Styling */
+.navbar {
+    box-shadow: 0 4px 6px rgba(20, 1, 1, 0.1);
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+    color: #0d6efd;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Bar */
+form.d-flex input[type="search"] {
+    border-radius: 20px;
+    border: 1px solid #ced4da;
+}
+
+form.d-flex button {
+    border-radius: 20px;
+    padding: 5px 15px;
+    background-color: #0d6efd;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+form.d-flex button:hover {
+    background-color: #0b5ed7;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+    .log-logo-img {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    form.d-flex {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

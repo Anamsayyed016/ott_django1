@@ -1,0 +1,91 @@
+{% extends "index.html" %}
+{% load static %} 
+{% block title %}index.html{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/subs.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="subscription-container">
+  <div class="subscription-header">
+    <h1>Select a Subscription</h1>
+    <p>Find the perfect plan tailored to your needs</p>
+  </div>
+
+  <div class="subscription-toggle">
+    <span class="toggle-option active" id="monthly-toggle">Monthly</span>
+    <span class="toggle-option" id="yearly-toggle">Yearly</span>
+  </div>
+
+  <div class="subscription-plans">
+    <div class="plan-card">
+      <div class="plan-header">
+        <h3>Starter</h3>
+        <div class="plan-price">
+          <span class="price" id="starter-price">₹199</span>
+          <span class="period">per month</span>
+        </div>
+      </div>
+      <div class="plan-features">
+        <ul>
+          <li>HD video streaming</li>
+          <li>Access on 1 device</li>
+          <li>No offline viewing</li>
+          <li>Limited content catalog</li>
+        </ul>
+      </div>
+      <div class="plan-cta">
+        <a href="#" class="btn-subscribe">Subscribe</a>
+      </div>
+    </div>
+
+    <div class="plan-card popular">
+      <div class="popular-tag">Top Pick</div>
+      <div class="plan-header">
+        <h3>Essential</h3>
+        <div class="plan-price">
+          <span class="price" id="essential-price">₹499</span>
+          <span class="period">per month</span>
+        </div>
+      </div>
+      <div class="plan-features">
+        <ul>
+          <li>Full HD streaming</li>
+          <li>Use on 2 devices</li>
+          <li>Download content on 2 devices</li>
+          <li>Extensive content library</li>
+        </ul>
+      </div>
+      <div class="plan-cta">
+        <a href="#" class="btn-subscribe">Subscribe</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <h3>Elite</h3>
+        <div class="plan-price">
+          <span class="price" id="elite-price">₹899</span>
+          <span class="period">per month</span>
+        </div>
+      </div>
+      <div class="plan-features">
+        <ul>
+          <li>Ultra HD 4K streaming</li>
+          <li>Up to 4 devices simultaneously</li>
+          <li>Download on 6 devices</li>
+          <li>Exclusive and full content access</li>
+        </ul>
+      </div>
+      <div class="plan-cta">
+        <a href="#" class="btn-subscribe">Subscribe</a>
+      </div>
+    </div>
+  </div>
+ 
+      
+
+
+{% endblock %}
+
