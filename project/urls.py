@@ -17,16 +17,31 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index,name='home'),
+    path('', views.index, name='home'),
     path('home/', views.home, name='home'),
     path('subs/', views.subs, name='subs'),
     path('movie/', views.movie, name='movie'),
     path('web/', views.web, name='web'),
     path('login/', views.login, name='login'),
+    path('profile/', views.profile, name='profile'),
     path('admindash/', views.admindash, name='admindash'),
+    path('logout/', views.logout, name='logout'),
     
-
+    # User management URLs
+    path('edit_user/<int:user_id>/', views.edit_user, name='edit_user'),
+    path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
+    
+    # Subscription management URLs
+    path('edit_subscription/<int:sub_id>/', views.edit_subscription, name='edit_subscription'),
+    path('delete_subscription/<int:sub_id>/', views.delete_subscription, name='delete_subscription'),
 ]
+
+# Add this if you need to serve static files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

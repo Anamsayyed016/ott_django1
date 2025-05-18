@@ -1,13 +1,34 @@
 {% extends "index.html" %}
 {% load static %} 
-{% block title %}index.html{% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<style>
+    .section-container {
+        margin-bottom: 30px;
+    }
+    .form-header, .list-header {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 5px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-
     <div class="container mt-4">
+        {% if message %}
+            <div class="alert alert-{% if status == 'success' %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
@@ -15,17 +36,177 @@
                         Admin Menu
                     </div>
                     <ul class="list-group list-group-flush">
-                            <a href="">Add User</a>
+                        <a href="#users-section" id="users-link" class="list-group-item">Users Management</a>
+                        <a href="#subscriptions-section" id="subscriptions-link" class="list-group-item">Subscriptions Management</a>
                     </ul>
-
-                     <ul class="list-group list-group-flush">
-                            <a href="">Add Subscription</a>
-                    </ul>
-
+                </div>
+            </div>
+            <div class="col-md-9">
+                <!-- Users Section -->
+                <div class="section-container" id="users-section">
+                    <h2 class="section-header">Users Management</h2>
+                    
+                    <!-- Add User Form -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            Add New User
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <input type="hidden" name="form" value="user">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" name="username" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" name="password" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="confirm_password">Confirm Password</label>
+                                        <input type="password" class="form-control" name="confirm_password" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Create User</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Users List -->
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Existing Users
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user_item in users %}
+                                    <tr>
+                                        <td>{{ user_item.id }}</td>
+                                        <td>{{ user_item.username }}</td>
+                                        <td>{{ user_item.email }}</td>
+                                        <td class="action-buttons">
+                                            <a href="{% url 'edit_user' user_item.id %}" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="{% url 'delete_user' user_item.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">No users found</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Subscriptions Section -->
+                <div class="section-container" id="subscriptions-section">
+                    <h2 class="section-header">Subscriptions Management</h2>
+                    
+                    <!-- Add Subscription Form -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            Add New Subscription
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <input type="hidden" name="form" value="subscription">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="plan_name">Plan Name</label>
+                                        <input type="text" class="form-control" name="plan_name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="price">Price</label>
+                                        <input type="text" class="form-control" name="price" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="features">Features</label>
+                                    <textarea class="form-control" name="features" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="duration">Duration (months)</label>
+                                    <input type="number" class="form-control" name="duration" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Create Subscription</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Subscriptions List -->
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Existing Subscriptions
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Plan Name</th>
+                                        <th>Price</th>
+                                        <th>Duration</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for sub in subscriptions %}
+                                    <tr>
+                                        <td>{{ sub.id }}</td>
+                                        <td>{{ sub.plan_name }}</td>
+                                        <td>{{ sub.price }}</td>
+                                        <td>{{ sub.duration }} months</td>
+                                        <td class="action-buttons">
+                                            <a href="{% url 'edit_subscription' sub.id %}" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="{% url 'delete_subscription' sub.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">No subscriptions found</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll to sections when clicking menu links
+            document.getElementById('users-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('users-section').scrollIntoView({behavior: 'smooth'});
+            });
+            
+            document.getElementById('subscriptions-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('subscriptions-section').scrollIntoView({behavior: 'smooth'});
+            });
+        });
+    </script>
 {% endblock %}
-
